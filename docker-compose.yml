@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: final-project-nest
+    ports:
+      - "4000"
+    environment:
+      - DATABASE_URL=file:./dev.db
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: final-project-next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:15
+    container_name: db_chihuahuenos
+    restart: always
+    environment:
+      POSTGRES_DB: finalproject
+      POSTGRES_USER: tottiadmin
+      POSTGRES_PASSWORD: 12345admin
+    ports:
+      - "5432:5432"
